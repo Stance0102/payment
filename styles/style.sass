@@ -1,0 +1,99 @@
+@use "sass:map"
+$flex-direction: (row: row, row-r:row-reverse, column: column, col-rev: column-r)
+$justify-content: (start: flex-start, end: flex-end, center: center, around: space-around, between: space-between, evenly: space-evenly)
+$align-items: (start: flex-start, end: flex-end, center: center, around: space-around, between: space-between, stretch: stretch)
+
+= flexbox($flex_dir, $justify_con, $align_ite)
+    @if (map.has-key($flex-direction, $flex_dir) and map.has-key($justify-content, $justify_con) and map.has-key($align-items, $align-ite)) 
+        display: flex
+        flex-direction: map.get($flex-direction, $flex_dir)
+        justify-content: map.get($justify-content, $justify_con)
+        align-items: map.get($align-items,$align_ite)
+        @content
+    @else 
+        @error "#{$flex_dir} , #{$justify_con}, #{$align_ite} is not defined"
+    
+*, *::before, *::after
+     margin: 0
+     padding: 0
+     box-sizing: border-box
+
+html,body
+     width: 100vw
+     min-height: 100vh
+     margin: 0
+     padding: 0
+
+li
+    list-style-type: none
+
+.container
+    +flexbox(column, start, center)
+    width: 100%
+    height: 100%
+
+header
+    +flexbox(row, center, center)
+    width: 100%
+    height: 25%
+    background-color: #3596c3
+    font-size: 2rem
+    color: white
+    padding-top: 35px
+    padding-bottom: 35px
+
+.main
+    +flexbox(column, start, center)
+    width: 100%
+    height: 100%    
+    section
+        +flexbox(row,center,center)
+        flex-wrap: wrap
+        width: 100%
+        height: 100%
+        .btn-group
+            +flexbox(row, between, center)
+            // flex-wrap: nowrap
+            gap: 10px
+            width: 100%
+            height: 100%
+            margin-top: 35px
+            margin-bottom: 35px
+            article
+                +flexbox(column,center,center)
+                width: 50%
+                height: 100%
+                button
+                    width: 80%
+                    min-height: 50px
+                    max-height: 100px
+                    background-color: #3596c3
+                    border: none
+                    border-top-left-radius: 15px
+                    border-top-right-radius: 15px
+                    color: white
+                    font-size: 1.2rem
+                    font-weight: bold
+                    transition-duration: .7s
+                    &:hover
+                        color: #3596c3
+                        background-color: white
+                        border: 3px solid #3596c3
+                        border-bottom: none
+                        
+                .img-box
+                    width: 80%
+                    height: 100%
+                    img
+                        width: 100%
+                        height: 100%
+        
+
+footer
+    +flexbox(row, center, center)
+    width: 100%
+    height: 10%
+    background-color: #3596c3
+    color: white
+    padding-top: 35px
+    padding-bottom: 35px
